@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ page import="clientServer.parameter.CancelationOrigins" %>
+
 <%
-	String includer				=	"/upload";
+	String includer				=	"/lexicon/uploading";
 	String root					=	request.getContextPath();
 	
 	// TODO
@@ -31,7 +33,7 @@
 				<fieldset>
 					<legend>Charger un fichier Lexique 3.8</legend>
 					
-					<form id="lexique-upload-form" enctype="multipart/form-data" method="post" action="<%= root %>/telecharger" >
+					<form id="lexique-upload-form" enctype="multipart/form-data" method="post" action="<%= root %>/lexicon/upload" >
 
 						<input type="hidden" name="upload-data-type" value="lexique380" />
 
@@ -42,7 +44,7 @@
 
 						<div id="buttons-bar">
 							<input id="lexique-file-submit" type="submit" value="Ouvrir" title="Ouvrir">
-							<button id="lexique-file-cancel" type="submit" formaction="<%= root %>/annuler?origine=upload" title="Annuler">Annuler</button>
+							<button id="lexique-file-cancel" type="submit" formaction="<%= root %>/common/cancelation?origin=<%= CancelationOrigins.LEXICON_UPLOADING.getURLEncodedMessage() %>" title="Annuler">Annuler</button>
 						</div>
 
 					</form>

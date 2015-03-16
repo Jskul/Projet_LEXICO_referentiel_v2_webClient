@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ page import="clientServer.parameter.CancelationOrigins" %>
+
 <%
-	String includer				=	"/annulation";
+	String includer				=	"/common/cancelation";
 	String root					=	request.getContextPath();
-	String candelationMessage			=	(String) request.getAttribute("cancelationMessage");
-	if (candelationMessage == null) {candelationMessage = "";}
+	String candelationMessage	=	request.getParameter("cancelationMessage");
+	if (candelationMessage == null) {candelationMessage = CancelationOrigins.MISC.getURLEncodedMessage();}
 %>
 
 <!DOCTYPE html>

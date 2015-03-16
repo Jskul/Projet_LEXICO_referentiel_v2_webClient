@@ -18,7 +18,7 @@
 		+					"<nav>"
 		+						"<ul id=\"main-navigation-menu\">"
 		+							"<li>"
-		+								"<a href=\"" + root + "/vue/accueil.jsp\">Accueil</a>"
+		+								"<a href=\"" + root + "/common/welcome\">Accueil</a>"
 		+							"</li>"
 		+							"<li>"
 		+								"<a href=\"javascript:;\" onclick=\"alert('Non implémenté, désolé !');\">Recherche</a>"
@@ -27,7 +27,7 @@
 		+								"<a href=\"javascript:;\" onclick=\"alert('Non implémenté, désolé !');\">R&eacute;sultats</a>"
 		+							"</li>"
 		+							"<li>"
-		+								"<a href=\"" + root + "/vue/referentiel/telechargement/upload.jsp\">Importer</a>"
+		+								"<a href=\"" + root + "/lexicon/uploading\">Importer</a>"
 		+							"</li>"
 		+						"</ul>"
 		+					"</nav>"
@@ -38,7 +38,7 @@
 	 * Redefine the menu item matching the including page.
 	 */
 	 
-	mainNavigation = mainNavigation.replaceFirst("<li><a href=\"[^>]+" + includer + ".jsp", "<li class=\"main-navigation-menu-current\"><a href=\"#");
+	mainNavigation = mainNavigation.replaceFirst("<li><a href=\"[^>]+" + includer, "<li class=\"main-navigation-menu-current\"><a href=\"#");
 
 %>
 

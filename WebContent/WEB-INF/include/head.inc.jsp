@@ -16,49 +16,49 @@
 	String tagMetaHttpEquiv				=			"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">";
 	String tagMetaCharSet				=			"<meta charset=\"UTF-8\">";
 	String tagTitle						=			"<title>LEXICO Référentiel</title>";
-	String tagLinkRelStyleSheet			=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/lexico.css\" media=\"screen\">";
+	String tagLinkRelStyleSheet			=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/lexico.css\" media=\"screen\">";
 	String tagScript					=			"";
 
 	/*
 	 * Redefine tags as a function of the including page.
 	 */
 
-	if (includer.equals("/accueil")) {
+	if (includer.equals("/common/welcome")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Accueil</title>";
-	} else if (includer.equals("/erreur")) {
+	} else if (includer.equals("/common/error")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Erreur</title>";
-	} else if (includer.equals("/annulation")) {
+	} else if (includer.equals("/common/cancelation")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Annulation</title>";
-	} else if (includer.equals("/upload")) {
+	} else if (includer.equals("/lexicon/uploading")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Upload</title>";
 		
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/formulaire.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/form.css\" media=\"screen\">";
 	} /*else if (includer.equals("/do/formeslister")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Résultats</title>";
 		
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/form.css\" media=\"screen\">";
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/formesLister.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/form.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/formesLister.css\" media=\"screen\">";
 
 	} else if (includer.equals("lemmeCreer.jsp")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Création d'un lemme</title>";
 		
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/form.css\" media=\"screen\">";
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/itemInterface.css\" media=\"screen\">";
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/js/jquery-ui-1.11.3/jquery-ui.min.css\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/form.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/itemInterface.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/js/jquery-ui-1.11.3/jquery-ui.min.css\">";
  		
- 		tagScript					+=			"<script src=\"" + root + "/_commun/js/jquery-ui-1.11.3/external/jquery/jquery.js\"></script>";
- 		tagScript					+=			"<script src=\"" + root + "/_commun/js/jquery-ui-1.11.3/jquery-ui.min.js\"></script>";
- 		tagScript					+=			"<script src=\"" + root + "/_commun/js/lexico.js\"></script>";
+ 		tagScript					+=			"<script src=\"" + root + "/_common/js/jquery-ui-1.11.3/external/jquery/jquery.js\"></script>";
+ 		tagScript					+=			"<script src=\"" + root + "/_common/js/jquery-ui-1.11.3/jquery-ui.min.js\"></script>";
+ 		tagScript					+=			"<script src=\"" + root + "/_common/js/lexico.js\"></script>";
 	} else if (includer.equals("lemmeModifier.jsp")) {
 		tagTitle					=			"<title>LEXICO Référentiel - Modification d'un lemme</title>";
 		
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/form.css\" media=\"screen\">";
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/css/itemInterface.css\" media=\"screen\">";
- 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_commun/js/jquery-ui-1.11.3/jquery-ui.min.css\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/form.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/css/itemInterface.css\" media=\"screen\">";
+ 		tagLinkRelStyleSheet		+=			"<link rel=\"stylesheet\" href=\"" + root + "/_common/js/jquery-ui-1.11.3/jquery-ui.min.css\">";
  		
- 		tagScript					+=			"<script src=\"" + root + "/_commun/js/jquery-ui-1.11.3/external/jquery/jquery.js\"></script>";
- 		tagScript					+=			"<script src=\"" + root + "/_commun/js/jquery-ui-1.11.3/jquery-ui.min.js\"></script>";
- 		tagScript					+=			"<script src=\"" + root + "/_commun/js/lexico.js\"></script>";
+ 		tagScript					+=			"<script src=\"" + root + "/_common/js/jquery-ui-1.11.3/external/jquery/jquery.js\"></script>";
+ 		tagScript					+=			"<script src=\"" + root + "/_common/js/jquery-ui-1.11.3/jquery-ui.min.js\"></script>";
+ 		tagScript					+=			"<script src=\"" + root + "/_common/js/lexico.js\"></script>";
 	}*/
 
 %>

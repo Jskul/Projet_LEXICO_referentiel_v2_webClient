@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@page import="controller.upload.LexiconUploadController"%>
+
 <%
-	String includer				=	"/erreur";
+	String includer				=	"/common/error";
 	String root					=	request.getContextPath();
-	String errorMessage			=	(String) request.getAttribute("errorMessage");
-	if (errorMessage == null) {errorMessage = "";}
+	Exception exception			=	(Exception) request.getAttribute("exception");
+	String errorMessage			=	"";
+	if (exception != null) {errorMessage = exception.getMessage();}
 %>
 
 <!DOCTYPE html>

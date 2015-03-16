@@ -36,17 +36,42 @@ public class FrontController implements Filter {
 	public void doFilter(ServletRequest sRequest, ServletResponse sResponse, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest hRequest = (HttpServletRequest) sRequest;
 		HttpServletResponse hResponse = (HttpServletResponse) sResponse;
+		RequestDispatcher dispatcher;
 		
-		String sPath = hRequest.getServletPath() + "/";
-		
+		String sPath = hRequest.getServletPath();
+
+		Utilities.trace(this.getClass().getName(), ".doFilter()", "sPath = " + sPath, null, false);
+
 		/*
 		 * Redirect to the welcome page.
 		 */
-		if (sPath.equals("//") || sPath.equals("/accueil")) {
+		if (sPath.equals("/") || sPath.equals("/common/welcome")) {
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to welcome page", true, false);
-			RequestDispatcher dispatcher = hRequest.getRequestDispatcher("/vue/accueil.jsp");
+			dispatcher = hRequest.getRequestDispatcher("/view/welcome.jsp");
 			dispatcher.forward(hRequest, hResponse);
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to welcome page", false, false);
+		}
+		
+		/*
+		 * Redirect cancelation.
+		 */
+		else if (sPath.startsWith("/common/cancelation")) {
+			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to cancelation page", true, false);
+			String origin = hRequest.getParameter("origin");
+			String cancelationMessage = origin;
+			hRequest.setAttribute("cancelationMessage", cancelationMessage);
+			dispatcher = hRequest.getRequestDispatcher("/view/default/cancelation.jsp");
+			dispatcher.forward(hRequest, hResponse);
+			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to cancelation page", false, false);
+		}
+		
+		/*
+		 * Filter web contents common folders.
+		 */
+		else if (sPath.startsWith("/_common/")) {
+			Utilities.trace(this.getClass().getName(), ".doFilter()", "/_common/*", true, false);
+			chain.doFilter(hRequest, hResponse);
+			Utilities.trace(this.getClass().getName(), ".doFilter()", "/_common/*", false, false);
 		}
 		
 		/*
@@ -65,64 +90,26 @@ public class FrontController implements Filter {
 			chain.doFilter(hRequest, hResponse);
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to gestion/*", false, false);
 		}
-		// Data exchange.
-		else if (sPath.startsWith("/vue/referentiel/telechargement/")) {
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to telechargement/*", true, false);
-			chain.doFilter(hRequest, hResponse);
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to telechargement/*", false, false);
-		}
-		else if (sPath.startsWith("/telecharger/")) {
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "To uploadController", true, false);
-			RequestDispatcher dispatcher = hRequest.getRequestDispatcher("/DataUploadController");
-			dispatcher.include(hRequest, hResponse);
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "To uploadController", false, false);
-		}
-		
-		/*
-		 * Redirect cancelation.
-		 */
-		
-		else if (sPath.startsWith("/annuler")) {
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to annuler", true, false);
-			
-			String origin = hRequest.getParameter("origine");
-			String cancelationMessage = "";
-			
-			// TODO >>>
-			switch (origin) {
-				case "upload":
-					cancelationMessage = "Upload abandonné.";
-				break;
-				
-				default:
-					cancelationMessage = "Abandon.";
-				break;
+		// Data uploading.
+		else if (sPath.startsWith("/lexicon/upload")) {
+			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to upload*", true, false);
+			if (sPath.equals("/lexicon/uploading")) {
+				dispatcher = hRequest.getRequestDispatcher("/view/lexicon/loading/uploading.jsp");
+				dispatcher.forward(hRequest, hResponse);
+			} else {				
+				chain.doFilter(hRequest, hResponse);
 			}
-			// <<< TODO
-			
-			hRequest.setAttribute("cancelationMessage", cancelationMessage);
-			RequestDispatcher dispatcher = hRequest.getRequestDispatcher("/vue/defaut/annulation.jsp");
-			dispatcher.forward(hRequest, hResponse);
+			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to upload*", false, false);
+		}
 
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to annuler", false, false);
-		}
-		
-		/*
-		 * Filter web contents common folders.
-		 */
-		else if (sPath.startsWith("/_commun/")) {
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "_commun/*", true, false);
-			chain.doFilter(hRequest, hResponse);
-			Utilities.trace(this.getClass().getName(), ".doFilter()", "_commun/*", false, false);
-		}
-		
 		/*
 		 * Redirect to error page.
 		 */
 		else {
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to error page", true, false);
-			hRequest.setAttribute("errorMessage", Errors.FORBIDDEN_ACCESS.getMessage());
-			RequestDispatcher dispatcher = hRequest.getRequestDispatcher("/vue/defaut/erreur.jsp");
+			Exception exception = new Exception(Errors.FORBIDDEN_ACCESS.getMessage());
+			hRequest.setAttribute("exception", exception);
+			dispatcher = hRequest.getRequestDispatcher("/view/default/error.jsp");
 			dispatcher.forward(hRequest, hResponse);
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to error page", false, false);
 		}
