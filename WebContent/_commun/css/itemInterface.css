@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+/**
+ * Style sheet for items interfaces.
+ */
+
+#item-main-attributes-left,
+#item-orthographic-attributes-left {
+	width: 45%;
+	margin: 5px;
+	float: left;
+}
+
+#item-main-attributes-right,
+#item-orthographic-attributes-right {
+	width: 45%;
+	margin: 5px;
+	float: right;
+}
+
