@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import parameter.Parameters;
 import clientServer.utility.Utilities;
 import clientServer.parameter.Errors;
 
@@ -47,7 +48,7 @@ public class FrontController implements Filter {
 		 */
 		if (sPath.equals("/") || sPath.equals("/common/welcome")) {
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to welcome page", true, false);
-			dispatcher = hRequest.getRequestDispatcher("/view/welcome.jsp");
+			dispatcher = hRequest.getRequestDispatcher(Parameters.JSP_PATH_WELCOME);
 			dispatcher.forward(hRequest, hResponse);
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to welcome page", false, false);
 		}
@@ -60,7 +61,7 @@ public class FrontController implements Filter {
 			String origin = hRequest.getParameter("origin");
 			String cancelationMessage = origin;
 			hRequest.setAttribute("cancelationMessage", cancelationMessage);
-			dispatcher = hRequest.getRequestDispatcher("/view/default/cancelation.jsp");
+			dispatcher = hRequest.getRequestDispatcher(Parameters.JSP_PATH_CANCELATION);
 			dispatcher.forward(hRequest, hResponse);
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to cancelation page", false, false);
 		}
@@ -94,7 +95,7 @@ public class FrontController implements Filter {
 		else if (sPath.startsWith("/lexicon/upload")) {
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to upload*", true, false);
 			if (sPath.equals("/lexicon/uploading")) {
-				dispatcher = hRequest.getRequestDispatcher("/view/lexicon/loading/uploading.jsp");
+				dispatcher = hRequest.getRequestDispatcher(Parameters.JSP_PATH_UPLOADING);
 				dispatcher.forward(hRequest, hResponse);
 			} else {				
 				chain.doFilter(hRequest, hResponse);
@@ -109,7 +110,7 @@ public class FrontController implements Filter {
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to error page", true, false);
 			Exception exception = new Exception(Errors.FORBIDDEN_ACCESS.getMessage());
 			hRequest.setAttribute("exception", exception);
-			dispatcher = hRequest.getRequestDispatcher("/view/default/error.jsp");
+			dispatcher = hRequest.getRequestDispatcher(Parameters.JSP_PATH_ERROR);
 			dispatcher.forward(hRequest, hResponse);
 			Utilities.trace(this.getClass().getName(), ".doFilter()", "Redirect to error page", false, false);
 		}

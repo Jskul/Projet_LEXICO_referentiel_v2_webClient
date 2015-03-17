@@ -7,6 +7,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import clientServer.utility.Utilities;
+
 /**
  * TODO
  * 
@@ -20,6 +22,7 @@ public class FileLocationContextListener implements ServletContextListener {
 	 * TODO
 	 */
     public void contextInitialized(ServletContextEvent servletContextEvent) {
+    	Utilities.trace(this.getClass().getName(), ".contextInitialized()", null, true, false);
         String rootPath = System.getProperty("catalina.home");
         ServletContext ctx = servletContextEvent.getServletContext();
         String relativePath = ctx.getInitParameter("tempfile.dir");
@@ -28,6 +31,7 @@ public class FileLocationContextListener implements ServletContextListener {
 System.out.println("File Directory created to be used for storing files");
         ctx.setAttribute("FILES_DIR_FILE", file);
         ctx.setAttribute("FILES_DIR", rootPath + File.separator + relativePath);
+        Utilities.trace(this.getClass().getName(), ".contextInitialized()", null, false, false);
     }
  
     /**

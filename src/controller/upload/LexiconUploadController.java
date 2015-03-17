@@ -1,7 +1,10 @@
 package controller.upload;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
+import javax.naming.InitialContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,14 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import parameter.Parameters;
 import clientServer.exception.LexicoUploadException;
 import clientServer.parameter.Errors;
+import clientServer.service.ServiceFacadeI;
 import clientServer.utility.Utilities;
 
 /**
  * A controller for lexical data upload.
  * 
  * Servlet implementation class DataUploadController
+ * 
+ * TODO GERER EXCEPTIONS
  */
 @WebServlet("/lexicon/upload")
 public class LexiconUploadController extends HttpServlet {
@@ -26,8 +33,23 @@ public class LexiconUploadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private RequestDispatcher dispatcher;
-//	private ServiceI serviceStateless;
+	private ServiceFacadeI serviceFacadeStateless;
 
+	/**
+	 * TODO
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	public void init(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		Utilities.trace(this.getClass().getName(), ".init()", null, true, false);
+		setServiceEJB(request, response);
+		Utilities.trace(this.getClass().getName(), ".init()", null, false, false);
+	}
+	
+	
 	/**
 	 * Processes get requests.
 	 * 
@@ -37,7 +59,7 @@ public class LexiconUploadController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO doGet
+		// TODO
 	}
 
 	/**
@@ -53,7 +75,6 @@ public class LexiconUploadController extends HttpServlet {
 		//String action  = request.getPathInfo().toLowerCase();
 		String action = request.getServletPath();
 		Utilities.trace(this.getClass().getName(), ".doPost()", "action = " + action, null, false);
-
 		try {
 			switch (action) {
 				case "/lexicon/upload":
@@ -75,21 +96,77 @@ public class LexiconUploadController extends HttpServlet {
 	 * 
 	 * @param	request		HttpServletRequest	A servlet request.
 	 * @param	response	HttpServletResponse	A servlet response.
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	private void doUpload(HttpServletRequest request, HttpServletResponse response) {
+	private void doUpload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilities.trace(this.getClass().getName(), ".doUpload()", null, true, false);
+		try {			
+			this.dispatcher = request.getRequestDispatcher("/UploadFileServlet");
+			this.dispatcher.include(request, response);
+		} catch (Exception e) {
+			// TODO Exception
+		}
+/*		
+		String absolutePathAtServer = "C:/httpd/jboss7/standalone/tmp/tmpfiles/Lexique380.txt";
+		String delimiter = "\t";
+
+        Scanner scanner = new Scanner(new File(absolutePathAtServer));
+        Scanner dataScanner = null;
+        int index = 0;
+        List<Employee> empList = new ArrayList<>();
+         
+        while (scanner.hasNextLine()) {
+            dataScanner = new Scanner(scanner.nextLine());
+            dataScanner.useDelimiter(delimiter);
+            Employee emp = new Employee();
+ 
+            while (dataScanner.hasNext()) {
+                String data = dataScanner.next();
+                if (index == 0)
+                    emp.setId(Integer.parseInt(data));
+                else if (index == 1)
+                    emp.setName(data);
+                else if (index == 2)
+                    emp.setRole(data);
+                else if (index == 3)
+                    emp.setSalary(data);
+                else
+                    System.out.println("invalid data::" + data);
+                index++;
+            }
+            index = 0;
+            empList.add(emp);
+        }
+ 
+        scanner.close();
+	
+
+		*/
 		
-		Utilities.trace(this.getClass().getName(), ".doUpload()", "*** TODO ***", null, false);
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		this.serviceFacadeStateless
 		Utilities.trace(this.getClass().getName(), ".doUpload()", null, false, false);
 	}
 
-
-
-
-
-
-	
 	/**
 	 * Sets the service EJB.
 	 * 
@@ -99,20 +176,17 @@ public class LexiconUploadController extends HttpServlet {
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-//	private void setServiceEJB(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//		Utilities.trace(this.getClass().getName(), ".setServiceEJB()", "");
-//		
-//		InitialContext initialContext;
-//
-//		try {
-//			initialContext = new InitialContext();
-//			this.serviceStateless  = (ServiceI) initialContext.lookup( ParametersI.SERVICE_EJB );
-//		} catch (Exception e) {
-//			doError(request, response, e);
-//		}
-//		
-//		Utilities.trace(this.getClass().getName(), ".setServiceEJB() ########################### FIN ###########################", "");
-//	}
+	private void setServiceEJB(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		Utilities.trace(this.getClass().getName(), ".setServiceEJB()", null, true, false);
+		InitialContext initialContext;
+		try {
+			initialContext = new InitialContext();
+			this.serviceFacadeStateless  = (ServiceFacadeI) initialContext.lookup( Parameters.EJB_SERVICE_FACADE );
+		} catch (Exception e) {
+			doError(request, response, e);
+		}
+		Utilities.trace(this.getClass().getName(), ".setServiceEJB()", null, false, false);
+	}
 	
 	/**
 	 * Redirects to an error page.

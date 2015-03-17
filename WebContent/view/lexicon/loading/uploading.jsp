@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1"%>
 
-<%@ page import="clientServer.parameter.CancelationOrigins" %>
+<%@ page import="clientServer.parameter.Cancelations" %>
 
 <%
 	String includer				=	"/lexicon/uploading";
@@ -28,7 +28,7 @@
 		<main class="third-width">
 		
 			<article>
-				<h1>TÃ©lÃ©chargement</h1>
+				<h1>Téléchargement</h1>
 
 				<fieldset>
 					<legend>Charger un fichier Lexique 3.8</legend>
@@ -44,7 +44,7 @@
 
 						<div id="buttons-bar">
 							<input id="lexique-file-submit" type="submit" value="Ouvrir" title="Ouvrir">
-							<button id="lexique-file-cancel" type="submit" formaction="<%= root %>/common/cancelation?origin=<%= CancelationOrigins.LEXICON_UPLOADING.getURLEncodedMessage() %>" title="Annuler">Annuler</button>
+							<button id="lexique-file-cancel" type="submit" formaction="<%= root %>/common/cancelation?cancelationMessage=<%= Cancelations.LEXICON_UPLOADING.getURLEncodedMessage() %>" title="Annuler">Annuler</button>
 						</div>
 
 					</form>

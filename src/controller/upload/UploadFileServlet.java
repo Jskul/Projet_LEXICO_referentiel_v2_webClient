@@ -17,6 +17,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import clientServer.utility.Utilities;
+
 
 /**
  * 
@@ -37,20 +39,29 @@ public class UploadFileServlet extends HttpServlet {
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+    	Utilities.trace(this.getClass().getName(), ".doGet()", null, true, false);
+    	
+    	Utilities.trace(this.getClass().getName(), ".doGet()", null, false, false);
     }
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	Utilities.trace(this.getClass().getName(), ".doPost()", null, true, false);
         if(!ServletFileUpload.isMultipartContent(request)){
             throw new ServletException("Content type is not multipart/form-data");
         }
          
+        Utilities.trace(this.getClass().getName(), ".doPost()", "A", null, false);
+        
 //        response.setContentType("text/html");
 //        PrintWriter out = response.getWriter();
 //        out.write("<html><head></head><body>");
         try {
+        	Utilities.trace(this.getClass().getName(), ".doPost()", "B", null, false);
             List<FileItem> fileItemsList = uploader.parseRequest(request);
+            Utilities.trace(this.getClass().getName(), ".doPost()", "C", null, false);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
+            Utilities.trace(this.getClass().getName(), ".doPost()", "D", null, false);
+
             while(fileItemsIterator.hasNext()){
                 FileItem fileItem = fileItemsIterator.next();
                 System.out.println("FieldName="+fileItem.getFieldName());
@@ -73,6 +84,8 @@ System.out.println("Absolute Path at server="+file.getAbsolutePath());
 //            out.write("Exception in uploading file.");
         }
 //        out.write("</body></html>");
+        
+        Utilities.trace(this.getClass().getName(), ".doPost()", null, false, false);
     }
  
 }

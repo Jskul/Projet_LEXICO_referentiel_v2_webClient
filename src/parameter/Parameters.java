@@ -1,7 +1,7 @@
 package parameter;
 
 /**
- * Some general parameters.
+ * Some general client-server parameters.
  * 
  * @author JL
  */
@@ -17,6 +17,15 @@ public class Parameters {
 	 * EJB paths.
 	 */
 	public final static String EJB_SERVICE_FACADE = "ejb:/" + SERVER_PROJECT_NAME + "/ServiceFacadeBean!clientServer.service.ServiceFacadeI";
+	
+	/*
+	 * JSP paths.
+	 */
+	public final static String JSP_PATH_WELCOME			=	"/view/welcome.jsp";
+	public final static String JSP_PATH_ERROR			=	"/view/default/error.jsp";
+	public final static String JSP_PATH_CANCELATION		=	"/view/default/cancelation.jsp";
+	public final static String JSP_PATH_UPLOADING		=	"/view/lexicon/loading/uploading.jsp";
+	
 	
 	
 }
