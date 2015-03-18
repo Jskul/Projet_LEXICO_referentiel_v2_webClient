@@ -1,6 +1,7 @@
 package controller.upload;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -36,21 +37,6 @@ public class LexiconUploadController extends HttpServlet {
 	private ServiceFacadeI serviceFacadeStateless;
 
 	/**
-	 * TODO
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws IOException
-	 * @throws ServletException
-	 */
-	public void init(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		Utilities.trace(this.getClass().getName(), ".init()", null, true, false);
-		setServiceEJB(request, response);
-		Utilities.trace(this.getClass().getName(), ".init()", null, false, false);
-	}
-	
-	
-	/**
 	 * Processes get requests.
 	 * 
 	 * @param	request		HttpServletRequest	A servlet request.
@@ -72,7 +58,6 @@ public class LexiconUploadController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilities.trace(this.getClass().getName(), ".doPost()", null, true, false);
-		//String action  = request.getPathInfo().toLowerCase();
 		String action = request.getServletPath();
 		Utilities.trace(this.getClass().getName(), ".doPost()", "action = " + action, null, false);
 		try {
@@ -96,75 +81,89 @@ public class LexiconUploadController extends HttpServlet {
 	 * 
 	 * @param	request		HttpServletRequest	A servlet request.
 	 * @param	response	HttpServletResponse	A servlet response.
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * @throws Exception 
 	 */
-	private void doUpload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@SuppressWarnings("resource")
+	private void doUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Utilities.trace(this.getClass().getName(), ".doUpload()", null, true, false);
-		try {			
-			this.dispatcher = request.getRequestDispatcher("/UploadFileServlet");
-			this.dispatcher.include(request, response);
-		} catch (Exception e) {
-			// TODO Exception
-		}
-/*		
-		String absolutePathAtServer = "C:/httpd/jboss7/standalone/tmp/tmpfiles/Lexique380.txt";
-		String delimiter = "\t";
-
-        Scanner scanner = new Scanner(new File(absolutePathAtServer));
-        Scanner dataScanner = null;
-        int index = 0;
-        List<Employee> empList = new ArrayList<>();
-         
-        while (scanner.hasNextLine()) {
-            dataScanner = new Scanner(scanner.nextLine());
-            dataScanner.useDelimiter(delimiter);
-            Employee emp = new Employee();
- 
-            while (dataScanner.hasNext()) {
-                String data = dataScanner.next();
-                if (index == 0)
-                    emp.setId(Integer.parseInt(data));
-                else if (index == 1)
-                    emp.setName(data);
-                else if (index == 2)
-                    emp.setRole(data);
-                else if (index == 3)
-                    emp.setSalary(data);
-                else
-                    System.out.println("invalid data::" + data);
-                index++;
-            }
-            index = 0;
-            empList.add(emp);
-        }
- 
-        scanner.close();
-	
-
-		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		this.serviceFacadeStateless
-		Utilities.trace(this.getClass().getName(), ".doUpload()", null, false, false);
+		String dataType = request.getParameter("upload-data-type");		
+System.out.println("A " + dataType);
+		/*
+		 *  Upload the file.
+		 */
+//		try {			
+//			this.dispatcher = request.getRequestDispatcher("/UploadFileServlet");
+//			this.dispatcher.include(request, response);
+//		} catch (Exception e) {
+//			throw new Exception("TODO upload failed"); // TODO
+//		}
+//
+//		/*
+//		 * Scan the uploaded file.
+//		 */
+//		setServiceEJB(request, response);
+//
+//		String FILE_PATH = "";
+//		int SKIP_HEADER_LINES = 0;
+//		boolean deletionStatus = false;
+//		if (dataType.equals("lexique380")) {
+//			FILE_PATH = Parameters.LEXICON_SOURCE_FILE_PATH_LEXIQUE_380;
+//			SKIP_HEADER_LINES = Parameters.LEXICON_SOURCE_FILE_SKIP_HEADER_LINES_LEXIQUE_380;
+//			System.out.println("B");
+//			deletionStatus = this.serviceFacadeStateless.emptyLexique380();
+//			System.out.println("C");
+//			Utilities.trace(this.getClass().getName(), ".doUpload()", "deletionStatus = " + deletionStatus, null, false);
+//		}
+//		
+//        Scanner scanner = null;
+//		try {
+//			scanner = new Scanner( new File(FILE_PATH) ); // TODO
+//		} catch (FileNotFoundException e1) {
+//			throw new Exception("TODO file not found"); // TODO
+//		}
+//
+//        int index = 1;
+//        boolean persistStatus = false;
+//        int success = 0;
+//        int processed = 0;
+//
+//        while (scanner.hasNextLine()) {
+//        	String line = scanner.nextLine();
+//        	if(index > SKIP_HEADER_LINES) {
+//        		processed++;
+//	            try {
+//	            	if (dataType.equals("lexique380")) {	            		
+//	            		persistStatus = this.serviceFacadeStateless.persistLexique380Line(line);
+//	            	}
+//	            	if (persistStatus) {
+//	            		success++;
+//	            	}
+//				} catch (Exception e) {
+//					throw new Exception("TODO parsing failed"); // TODO
+//				}
+//        	}
+//            index++;
+//        }
+//        scanner.close();
+//        
+//        /*
+//         * Set feedback.
+//         */
+//		String feedbackMessage = "";
+//		if (processed > 0) {
+//			if (processed == success) {
+//				feedbackMessage = "Fichier importé avec succès (" + success + " entrées enregistrées).";
+//			} else {
+//				feedbackMessage = "Fichier importé (" + success + " entrées enregistrées, traitement en échec pour " + (processed - success) + " entrées).";
+//			}
+//		} else {
+//			feedbackMessage = "Aucune ligne traitée.";
+//		}
+//
+//		request.setAttribute("feedbackMessage", feedbackMessage);
+//		this.dispatcher = request.getRequestDispatcher(Parameters.JSP_PATH_UPLOADING);
+//		this.dispatcher.forward(request, response);
+//		Utilities.trace(this.getClass().getName(), ".doUpload()", null, false, false);
 	}
 
 	/**
@@ -201,7 +200,7 @@ public class LexiconUploadController extends HttpServlet {
 	private void doError(HttpServletRequest request, HttpServletResponse response, Exception exception) throws IOException, ServletException {
 		Utilities.trace(this.getClass().getName(), ".doError()", null, true, false);
 		request.setAttribute("exception", exception);
-		this.dispatcher = request.getRequestDispatcher("/view/default/error.jsp");
+		this.dispatcher = request.getRequestDispatcher(Parameters.JSP_PATH_ERROR);
 		this.dispatcher.forward(request, response);
 		Utilities.trace(this.getClass().getName(), ".doError()", null, false, false);
 	}

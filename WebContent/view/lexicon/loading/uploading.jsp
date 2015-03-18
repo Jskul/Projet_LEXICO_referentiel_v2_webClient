@@ -5,8 +5,8 @@
 <%
 	String includer				=	"/lexicon/uploading";
 	String root					=	request.getContextPath();
-	
-	// TODO
+	String feedbackMessage		=	(String) request.getAttribute("feedbackMessage");
+	if (feedbackMessage == null) {feedbackMessage = ""; }
 	
 %>
 
@@ -54,6 +54,11 @@
 		
 		</main>
 		
+		<%
+			if (feedbackMessage.isEmpty() == false) {
+				out.println("<script>alert(\"" + feedbackMessage + "\");</script>");
+			}
+		%>
 
 	</body>
 </html>

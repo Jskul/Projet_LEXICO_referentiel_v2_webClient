@@ -2,7 +2,6 @@ package controller.upload;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,72 +18,71 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import clientServer.utility.Utilities;
 
-
 /**
+ * TODO
  * 
  * @author	JL
  * @see		http://www.journaldev.com/1964/servlet-upload-file-and-download-file-example
  */
 @WebServlet("/UploadFileServlet")
 public class UploadFileServlet extends HttpServlet {
+	/**
+	 * TODO
+	 */
     private static final long serialVersionUID = 1L;
     private ServletFileUpload uploader = null;
     
+    /**
+     * TODO
+     */
     @Override
     public void init() throws ServletException{
+    	Utilities.trace(this.getClass().getName(), ".init()", null, true, false);
         DiskFileItemFactory fileFactory = new DiskFileItemFactory();
         File filesDir = (File) getServletContext().getAttribute("FILES_DIR_FILE");
         fileFactory.setRepository(filesDir);
         this.uploader = new ServletFileUpload(fileFactory);
+        Utilities.trace(this.getClass().getName(), ".init()", null, false, false);
     }
     
+    /**
+     * TODO
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	Utilities.trace(this.getClass().getName(), ".doGet()", null, true, false);
-    	
+    	// TODO
     	Utilities.trace(this.getClass().getName(), ".doGet()", null, false, false);
     }
  
+    /**
+     * TODO
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	Utilities.trace(this.getClass().getName(), ".doPost()", null, true, false);
         if(!ServletFileUpload.isMultipartContent(request)){
-            throw new ServletException("Content type is not multipart/form-data");
+            throw new ServletException("TODO Content type is not multipart/form-data"); // TODO
         }
-         
-        Utilities.trace(this.getClass().getName(), ".doPost()", "A", null, false);
-        
-//        response.setContentType("text/html");
-//        PrintWriter out = response.getWriter();
-//        out.write("<html><head></head><body>");
+
         try {
-        	Utilities.trace(this.getClass().getName(), ".doPost()", "B", null, false);
             List<FileItem> fileItemsList = uploader.parseRequest(request);
-            Utilities.trace(this.getClass().getName(), ".doPost()", "C", null, false);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
-            Utilities.trace(this.getClass().getName(), ".doPost()", "D", null, false);
 
             while(fileItemsIterator.hasNext()){
                 FileItem fileItem = fileItemsIterator.next();
-                System.out.println("FieldName="+fileItem.getFieldName());
-                System.out.println("FileName="+fileItem.getName());
-                System.out.println("ContentType="+fileItem.getContentType());
-                System.out.println("Size in bytes="+fileItem.getSize());
-                 
                 File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-System.out.println("Absolute Path at server="+file.getAbsolutePath());
+                Utilities.trace(this.getClass().getName(), ".doPost()", "FieldName = " + fileItem.getFieldName(), null, false);
+                Utilities.trace(this.getClass().getName(), ".doPost()", "FileName = " + fileItem.getName(), null, false);
+                Utilities.trace(this.getClass().getName(), ".doPost()", "ContentType = " + fileItem.getContentType(), null, false);
+                Utilities.trace(this.getClass().getName(), ".doPost()", "Size in bytes = " + fileItem.getSize(), null, false);
+                Utilities.trace(this.getClass().getName(), ".doPost()", "Absolute Path at server = " + file.getAbsolutePath(), null, false);
                 fileItem.write(file);
-//                out.write("File "+fileItem.getName()+ " uploaded successfully.");
-//                out.write("<br>");
-//                out.write("<a href=\"UploadDownloadFileServlet?fileName="+fileItem.getName()+"\">Download "+fileItem.getName()+"</a>");
             }
         } catch (FileUploadException e) {
-        	System.out.println("Raté 1");
-//            out.write("Exception in uploading file.");
+        	//throw new Exception("TODO FileUploadException in uploading file."); // TODO
         } catch (Exception e) {
-        	System.out.println("Raté 2");
-//            out.write("Exception in uploading file.");
+        	//throw new Exception("TODO Exception in uploading file."); // TODO
         }
-//        out.write("</body></html>");
-        
+
         Utilities.trace(this.getClass().getName(), ".doPost()", null, false, false);
     }
  
