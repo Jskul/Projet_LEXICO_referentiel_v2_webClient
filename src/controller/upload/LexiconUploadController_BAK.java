@@ -3,7 +3,6 @@ package controller.upload;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Scanner;
 
 import javax.naming.InitialContext;
@@ -28,8 +27,8 @@ import clientServer.utility.Utilities;
  * 
  * TODO GERER EXCEPTIONS
  */
-@WebServlet("/lexicon/upload")
-public class LexiconUploadController extends HttpServlet {
+@WebServlet("/XXXXlexicon/upload")
+public class LexiconUploadController_BAK extends HttpServlet {
 	/**
 	 * TODO serialVersionUID
 	 */
@@ -87,48 +86,83 @@ public class LexiconUploadController extends HttpServlet {
 	 */
 	@SuppressWarnings("resource")
 	private void doUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Utilities.trace(this.getClass().getName(), ".doUpload()", null, true, false);
-		String lexiconType = request.getParameter("lexicon-type");		
-
-		/*
-		 *  Upload the file.
-		 */
-		try {			
-			this.dispatcher = request.getRequestDispatcher("/UploadFileServlet");
-			this.dispatcher.include(request, response);
-		} catch (Exception e) {
-			throw new Exception("TODO upload failed"); // TODO
-		}
-
-		/*
-		 * Scan the uploaded file.
-		 */
-		setServiceEJB(request, response);
-
-		String FILE_PATH = "";
-		File file = null;
-		Map<String, String> report = null;
-		if (lexiconType.equals("lexique380")) {
-			FILE_PATH = Parameters.LEXICON_SOURCE_FILE_PATH_LEXIQUE_380;
-			file = new File(FILE_PATH);
-			report = this.serviceFacadeStateless.persistLexique380File(file);
-		}
-		
-        /*
-         * Set feedback.
-         */
-		String feedbackMessage = "";
-		if (report != null) {			
-			feedbackMessage += report.get("deletedCount") + "/" + report.get("itemCountBefore") + " supprimées.\\n";
-			feedbackMessage += report.get("processed") + "/" + report.get("lines") + " traitées, dont " + report.get("success") + " avec succès.";
-		} else {
-			feedbackMessage += "L'action s'est terminée de manière inattendue.";
-		}
-
-		request.setAttribute("feedbackMessage", feedbackMessage);
-		this.dispatcher = request.getRequestDispatcher(Parameters.JSP_PATH_UPLOADING);
-		this.dispatcher.forward(request, response);
-		Utilities.trace(this.getClass().getName(), ".doUpload()", null, false, false);
+//		Utilities.trace(this.getClass().getName(), ".doUpload()", null, true, false);
+//		String lexiconType = request.getParameter("lexicon-type");		
+//
+//		/*
+//		 *  Upload the file.
+//		 */
+//		try {			
+//			this.dispatcher = request.getRequestDispatcher("/UploadFileServlet");
+//			this.dispatcher.include(request, response);
+//		} catch (Exception e) {
+//			throw new Exception("TODO upload failed"); // TODO
+//		}
+//
+//		/*
+//		 * Scan the uploaded file.
+//		 */
+//		setServiceEJB(request, response);
+//
+//		String FILE_PATH = "";
+//		int SKIP_HEADER_LINES = 0;
+//		boolean deletionStatus = false;
+//		if (lexiconType.equals("lexique380")) {
+//			FILE_PATH = Parameters.LEXICON_SOURCE_FILE_PATH_LEXIQUE_380;
+//			SKIP_HEADER_LINES = Parameters.LEXICON_SOURCE_FILE_SKIP_HEADER_LINES_LEXIQUE_380;
+//			deletionStatus = this.serviceFacadeStateless.emptyLexique380();
+//			Utilities.trace(this.getClass().getName(), ".doUpload()", "deletionStatus = " + deletionStatus, null, false);
+//		}
+//		
+//        Scanner scanner = null;
+//		try {
+//			scanner = new Scanner( new File(FILE_PATH) ); // TODO
+//		} catch (FileNotFoundException e1) {
+//			throw new Exception("TODO file not found"); // TODO
+//		}
+//
+//        int index = 1;
+//        boolean persistStatus = false;
+//        int success = 0;
+//        int processed = 0;
+//
+//        while (scanner.hasNextLine()) {
+//        	String line = scanner.nextLine();
+//        	if(index > SKIP_HEADER_LINES) {
+//        		processed++;
+//	            try {
+//	            	if (lexiconType.equals("lexique380")) {	            		
+//	            		persistStatus = this.serviceFacadeStateless.persistLexique380Line(line);
+//	            	}
+//	            	if (persistStatus) {
+//	            		success++;
+//	            	}
+//				} catch (Exception e) {
+//					throw new Exception("TODO parsing failed"); // TODO
+//				}
+//        	}
+//            index++;
+//        }
+//        scanner.close();
+//        
+//        /*
+//         * Set feedback.
+//         */
+//		String feedbackMessage = "";
+//		if (processed > 0) {
+//			if (processed == success) {
+//				feedbackMessage = "Fichier importé avec succès (" + success + " entrées enregistrées).";
+//			} else {
+//				feedbackMessage = "Fichier importé (" + success + " entrées enregistrées, traitement en échec pour " + (processed - success) + " entrées).";
+//			}
+//		} else {
+//			feedbackMessage = "Aucune ligne traitée.";
+//		}
+//
+//		request.setAttribute("feedbackMessage", feedbackMessage);
+//		this.dispatcher = request.getRequestDispatcher(Parameters.JSP_PATH_UPLOADING);
+//		this.dispatcher.forward(request, response);
+//		Utilities.trace(this.getClass().getName(), ".doUpload()", null, false, false);
 	}
 
 	/**

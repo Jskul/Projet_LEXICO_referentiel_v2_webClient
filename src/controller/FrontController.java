@@ -37,11 +37,6 @@ public class FrontController implements Filter {
 	public void doFilter(ServletRequest sRequest, ServletResponse sResponse, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest hRequest = (HttpServletRequest) sRequest;
 		
-		System.out.println("#### " +  sRequest.getAttribute("upload-data-type") );
-		System.out.println("#### " +  sRequest.getAttribute("lexique-file") );
-		System.out.println("#### " +  hRequest.getAttribute("upload-data-type") );
-		System.out.println("#### " +  hRequest.getAttribute("lexique-file") );
-		
 		HttpServletResponse hResponse = (HttpServletResponse) sResponse;
 		RequestDispatcher dispatcher;
 		

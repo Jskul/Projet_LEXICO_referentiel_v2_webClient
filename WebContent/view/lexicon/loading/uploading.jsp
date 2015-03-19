@@ -33,18 +33,19 @@
 				<fieldset>
 					<legend>Charger un fichier Lexique 3.8</legend>
 					
-					<form id="lexique-upload-form" enctype="multipart/form-data" method="post" action="<%= root %>/lexicon/upload" >
+					<!-- @see http://stackoverflow.com/questions/2827778/does-form-with-enctype-multipart-form-data-cause-problems-accessing-a-hidden-f -->
+					<form id="lexique380-upload-form" enctype="multipart/form-data" method="post" action="<%= root %>/lexicon/upload?lexicon-type=lexique380" >
 
-						<input type="hidden" name="upload-data-type" value="lexique380" />
-
+						<!-- <input type="text" name="lexicon-type" value="lexique380" /> -->
+ 
 						<div class="label-control-container">
-							<label id="lexique-file-label" for="lexique-file">Fichier</label> <input type="file" id="lexique-file" name="lexique-file">
+							<label id="lexicon-file-label" for="lexicon-file">Fichier</label> <input type="file" id="lexicon-file" name="lexicon-file">
 							<div class="clear"></div>
 						</div>
 
 						<div id="buttons-bar">
-							<input id="lexique-file-submit" type="submit" value="Ouvrir" title="Ouvrir">
-							<button id="lexique-file-cancel" type="submit" formaction="<%= root %>/common/cancelation?cancelationMessage=<%= Cancelations.LEXICON_UPLOADING.getURLEncodedMessage() %>" title="Annuler">Annuler</button>
+							<input id="lexique380-file-submit" type="submit" value="Ouvrir" title="Ouvrir">
+							<button id="lexique380-file-cancel" type="submit" formaction="<%= root %>/common/cancelation?cancelationMessage=<%= Cancelations.LEXICON_UPLOADING.getURLEncodedMessage() %>" title="Annuler">Annuler</button>
 						</div>
 
 					</form>
